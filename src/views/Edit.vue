@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <h2 class="center">Create Dish</h2>
+    <h2 class="center">Edit Dish</h2>
     <form @submit.prevent="submitHandler" class="col s12">
       <div class="row">
         <div class="col s12 m3">
@@ -22,7 +22,7 @@
       </div>
       <div class="row">
         <div class="col s12 m4">
-          <label for="category">Category</label>
+          <label for="weight">Category</label>
           <select v-model="dish.category">
             <option value="" disabled selected>Choose your category</option>
             <option value="Salad">Salad</option>
@@ -40,7 +40,7 @@
         </div>
         <div class="col s12 m4">
           <label for="available">Finish sale</label>
-          <input v-model="dish.saleFinish" id="saleFinish" class="timepicker" type="time" placeholder=" " />
+          <input v-model="dish.saleFinish" id="saleFinish" class="timepicker" type="time" />
         </div>
       </div>
       <div class="row">
@@ -103,44 +103,25 @@ export default {
   data: () => ({
     dish: {},
   }),
+  beforeMount() {
+    axiosInstance
+      .get(`/dishes/${this.$route.params._id}`)
+      .then(({ data }) => (this.dish = data.data))
+      .catch(error => console.log(error))
+  },
   methods: {
     submitHandler() {
-      const {
-        name,
-        price,
-        weight = 0,
-        description = 0,
-        category,
-        protein = 0,
-        energy = 0,
-        fat = 0,
-        status = true,
-        saleStart = 0,
-        waitingTime = 0,
-        saleFinish = '',
-      } = this
-      const dish = {
-        name,
-        price,
-        weight,
-        description,
-        protein,
-        energy,
-        fat,
-        waitingTime,
-        category,
-        status,
-        saleStart,
-        saleFinish,
+      const editedDish = {
+        ...this.dish,
       }
+
       axiosInstance
-        .put('/dishes', dish)
+        .put('/dishes', editedDish)
         .then(response => {
           this.$router.push('/')
         })
         .catch(error => console.log(error))
     },
-    mounted() {},
   },
 }
 </script>

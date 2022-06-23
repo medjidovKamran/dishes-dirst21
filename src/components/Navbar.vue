@@ -1,7 +1,7 @@
 <template>
-  <nav class="blue darken-2">
+  <nav class="teal lighten-2">
     <div class="nav-wrapper">
-      <router-link to="/" tag="a" class="brand-logo center">Logo</router-link>
+      <router-link to="/" tag="a" class="brand-logo center">DIRS21</router-link>
       <ul class="left hide-on-med-and-down">
         <li><router-link to="/" exact>Dishes</router-link></li>
         <li><router-link to="/create">Create</router-link></li>
